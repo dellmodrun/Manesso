@@ -975,6 +975,11 @@ body:before{
 .hairline-stage svg{filter:drop-shadow(18px 22px 13px rgba(0,0,0,.28))}
 .figure-readout{position:absolute;z-index:5;right:17px;bottom:15px;left:17px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding-top:10px;border-top:1px solid #302721;color:#62544d;font:600 6px var(--mono);letter-spacing:.1em;pointer-events:none}
 .figure-readout strong{color:#e7835f;font-size:8px;font-weight:700}.figure-readout em{color:#8d776c;font-style:normal}
+.dev-summary{display:grid;grid-template-columns:repeat(3,1fr);margin:22px 0 0;border-top:1px solid #332923;border-left:1px solid #332923}
+.dev-summary span{position:relative;padding:11px 10px 10px;border-right:1px solid #332923;border-bottom:1px solid #332923}
+.dev-summary i,.dev-summary b,.dev-summary em{display:block;font-family:var(--mono);font-style:normal}
+.dev-summary i{color:#695d56;font-size:5px;letter-spacing:.1em}.dev-summary b{margin-top:8px;color:#e6ddd6;font-size:7px;letter-spacing:.08em}.dev-summary em{margin-top:5px;color:#836f66;font-size:6px;letter-spacing:.06em}
+.dev-summary span:after{content:"";position:absolute;right:7px;top:8px;width:3px;height:3px;background:#e7835f}
 .backplane-nodes{z-index:4;grid-row:3;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:10px 16px;border:1px solid #342b26;background:#090706}
 .source-node{position:relative;min-width:0;padding:10px 9px 9px;text-align:left;color:#756a63;border:0;border-right:1px solid #342b26;background:transparent;font-family:var(--mono);cursor:pointer;transition:background .22s ease,color .22s ease}
 .source-node:last-child{border-right:0}.source-node:before{content:"";position:absolute;top:-1px;right:100%;left:0;height:1px;background:#e7835f;transition:right .32s cubic-bezier(.5,0,.1,1)}
@@ -999,4 +1004,5 @@ body:before{
   .hairline-wrap{min-height:0;margin:8px 8px 0}.figure-meta b{display:none}.hairline-stage{inset:30px -10px 22px}
   .backplane-nodes{margin:7px 8px}.source-node{padding:8px 7px}.source-node em{display:none}
   .backplane-spec{display:none}.backplane-board .board-telemetry{padding:0 10px}.backplane-board .board-telemetry span:nth-child(n+3){display:none}
+  .dev-summary{margin-top:18px}.dev-summary span{padding:9px 7px}.dev-summary em{display:none}
 }

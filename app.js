@@ -1,8 +1,8 @@
-const objects = window.FIRMWARE_SOURCE_OBJECTS;
-const tree = window.FIRMWARE_SOURCE_TREE;
+const objects = window.MANESSO_SOURCE_OBJECTS;
+const tree = window.MANESSO_SOURCE_TREE;
 
 const fileTree = document.querySelector("#fileTree");
-let currentPath = "programs/firmware/src/lib.rs";
+let currentPath = "programs/manesso/src/lib.rs";
 
 function fileKind(path) {
   const extension = path.split(".").pop().toUpperCase();

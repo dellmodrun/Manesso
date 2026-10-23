@@ -1,5 +1,5 @@
 [workspace]
-members = ["programs/firmware"]
+members = ["programs/manesso"]
 resolver = "2"
 
 [profile.release]

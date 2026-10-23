@@ -3,7 +3,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-firmware = "E7XwWNsXYWn81mVEGNwVfaHBynjZBcGYZ8ZwnfSzYgRB"
+manesso = "E7XwWNsXYWn81mVEGNwVfaHBynjZBcGYZ8ZwnfSzYgRB"
 
 [provider]
 cluster = "Localnet"

@@ -4,9 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const entries = [
-  ["programs/firmware/src/lib.rs", "RUST", "CI VERIFIED", "The native Solana program: Chip identity, revisions, Machine ownership, bounded installations, receipts and SPL Token settlement."],
-  ["programs/firmware/Cargo.toml", "TOML", "PROGRAM CONFIG", "Pins the Anchor and SPL dependencies for the onchain program."],
-  ["Cargo.toml", "TOML", "WORKSPACE", "Defines the Rust workspace containing the firmware program."],
+  ["programs/manesso/src/lib.rs", "RUST", "CI VERIFIED", "The native Solana program: Chip identity, revisions, Machine ownership, bounded installations, receipts and SPL Token settlement."],
+  ["programs/manesso/Cargo.toml", "TOML", "PROGRAM CONFIG", "Pins the Anchor and SPL dependencies for the onchain program."],
+  ["Cargo.toml", "TOML", "WORKSPACE", "Defines the Rust workspace containing the manesso program."],
   ["Anchor.toml", "TOML", "ANCHOR CONFIG", "Defines the program ID and local validator settings."],
   [".github/workflows/solana.yml", "YAML", "CI CONFIG", "Compiles and runs unit tests for the Solana program on Linux."],
   ["scripts/build-source-data.mjs", "JAVASCRIPT", "BUILD TOOL", "Reads real repository files and generates this website source browser."],
@@ -42,7 +42,7 @@ for (const [relativePath] of entries) {
 }
 const tree = Array.from(groups, ([name, children]) => ({ name, type: "folder", children }));
 for (const name of rootFiles) tree.push({ name, type: "file" });
-const output = "window.FIRMWARE_SOURCE_OBJECTS = " + JSON.stringify(objects, null, 2) + ";\n\n" +
-  "window.FIRMWARE_SOURCE_TREE = " + JSON.stringify(tree, null, 2) + ";\n";
+const output = "window.MANESSO_SOURCE_OBJECTS = " + JSON.stringify(objects, null, 2) + ";\n\n" +
+  "window.MANESSO_SOURCE_TREE = " + JSON.stringify(tree, null, 2) + ";\n";
 fs.writeFileSync(path.join(root, "source-data.js"), output);
 console.log("Synced " + entries.length + " real Solana source files into source-data.js");

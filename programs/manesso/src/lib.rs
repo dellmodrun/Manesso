@@ -5,7 +5,7 @@ use anchor_spl::token_interface::{self, Mint, TokenAccount, TokenInterface, Tran
 declare_id!("E7XwWNsXYWn81mVEGNwVfaHBynjZBcGYZ8ZwnfSzYgRB");
 
 #[program]
-pub mod firmware {
+pub mod manesso {
     use super::*;
 
     pub fn create_chip(ctx: Context<CreateChip>, chip_id: [u8; 32]) -> Result<()> {
@@ -23,14 +23,14 @@ pub mod firmware {
         artifact_digest: [u8; 32],
         manifest_digest: [u8; 32],
     ) -> Result<()> {
-        require!(number > 0, FirmwareError::InvalidRevision);
+        require!(number > 0, ManessoError::InvalidRevision);
         require!(
             number == ctx.accounts.chip.latest_revision.checked_add(1)
-                .ok_or(FirmwareError::ArithmeticOverflow)?,
-            FirmwareError::InvalidRevision
+                .ok_or(ManessoError::ArithmeticOverflow)?,
+            ManessoError::InvalidRevision
         );
-        require!(artifact_digest != [0; 32], FirmwareError::InvalidDigest);
-        require!(manifest_digest != [0; 32], FirmwareError::InvalidDigest);
+        require!(artifact_digest != [0; 32], ManessoError::InvalidDigest);
+        require!(manifest_digest != [0; 32], ManessoError::InvalidDigest);
 
         let revision = &mut ctx.accounts.revision;
         revision.chip = ctx.accounts.chip.key();
@@ -49,7 +49,7 @@ pub mod firmware {
     }
 
     pub fn create_machine(ctx: Context<CreateMachine>, operator: Pubkey) -> Result<()> {
-        require!(operator != Pubkey::default(), FirmwareError::InvalidOperator);
+        require!(operator != Pubkey::default(), ManessoError::InvalidOperator);
         let machine = &mut ctx.accounts.machine;
         machine.owner = ctx.accounts.owner.key();
         machine.operator = operator;
@@ -58,37 +58,37 @@ pub mod firmware {
     }
 
     pub fn set_operator(ctx: Context<SetOperator>, operator: Pubkey) -> Result<()> {
-        require!(operator != Pubkey::default(), FirmwareError::InvalidOperator);
+        require!(operator != Pubkey::default(), ManessoError::InvalidOperator);
         ctx.accounts.machine.operator = operator;
         Ok(())
     }
 
     pub fn install_chip(ctx: Context<InstallChip>, args: InstallArgs) -> Result<()> {
         let now = Clock::get()?.unix_timestamp;
-        require!(!ctx.accounts.revision.revoked, FirmwareError::RevisionRevoked);
-        require!(args.expires_at > now, FirmwareError::InstallationExpired);
-        require!(args.max_cost > 0, FirmwareError::InvalidBudget);
-        require!(args.window_limit >= args.max_cost, FirmwareError::InvalidBudget);
-        require!(args.window_seconds > 0, FirmwareError::InvalidBudget);
+        require!(!ctx.accounts.revision.revoked, ManessoError::RevisionRevoked);
+        require!(args.expires_at > now, ManessoError::InstallationExpired);
+        require!(args.max_cost > 0, ManessoError::InvalidBudget);
+        require!(args.window_limit >= args.max_cost, ManessoError::InvalidBudget);
+        require!(args.window_seconds > 0, ManessoError::InvalidBudget);
         require_keys_eq!(
             args.publisher,
             ctx.accounts.chip.publisher,
-            FirmwareError::PublisherMismatch
+            ManessoError::PublisherMismatch
         );
         require!(
             args.publisher != args.executor
                 && args.publisher != args.protocol
                 && args.executor != args.protocol,
-            FirmwareError::DuplicateRecipient
+            ManessoError::DuplicateRecipient
         );
         require!(
             u32::from(args.publisher_bps)
                 + u32::from(args.executor_bps)
                 + u32::from(args.protocol_bps)
                 == 10_000,
-            FirmwareError::InvalidRoute
+            ManessoError::InvalidRoute
         );
-        require!(args.mint != Pubkey::default(), FirmwareError::InvalidMint);
+        require!(args.mint != Pubkey::default(), ManessoError::InvalidMint);
 
         let installation = &mut ctx.accounts.installation;
         installation.machine = ctx.accounts.machine.key();
@@ -130,24 +130,24 @@ pub mod firmware {
     ) -> Result<()> {
         let now = Clock::get()?.unix_timestamp;
         let installation = &mut ctx.accounts.installation;
-        require!(installation.active, FirmwareError::InstallationRevoked);
-        require!(!ctx.accounts.revision.revoked, FirmwareError::RevisionRevoked);
-        require!(now < installation.expires_at, FirmwareError::InstallationExpired);
-        require!(cost > 0 && cost <= installation.max_cost, FirmwareError::CostExceedsLimit);
-        require!(invocation_id != [0; 32], FirmwareError::InvalidDigest);
-        require!(input_digest != [0; 32], FirmwareError::InvalidDigest);
-        require!(output_digest != [0; 32], FirmwareError::InvalidDigest);
+        require!(installation.active, ManessoError::InstallationRevoked);
+        require!(!ctx.accounts.revision.revoked, ManessoError::RevisionRevoked);
+        require!(now < installation.expires_at, ManessoError::InstallationExpired);
+        require!(cost > 0 && cost <= installation.max_cost, ManessoError::CostExceedsLimit);
+        require!(invocation_id != [0; 32], ManessoError::InvalidDigest);
+        require!(input_digest != [0; 32], ManessoError::InvalidDigest);
+        require!(output_digest != [0; 32], ManessoError::InvalidDigest);
 
         if now >= installation.window_start
             .checked_add(installation.window_seconds)
-            .ok_or(FirmwareError::ArithmeticOverflow)?
+            .ok_or(ManessoError::ArithmeticOverflow)?
         {
             installation.window_start = now;
             installation.window_spent = 0;
         }
         let next_spent = installation.window_spent.checked_add(cost)
-            .ok_or(FirmwareError::ArithmeticOverflow)?;
-        require!(next_spent <= installation.window_limit, FirmwareError::WindowLimitExceeded);
+            .ok_or(ManessoError::ArithmeticOverflow)?;
+        require!(next_spent <= installation.window_limit, ManessoError::WindowLimitExceeded);
         installation.window_spent = next_spent;
 
         let receipt = &mut ctx.accounts.receipt;
@@ -165,10 +165,10 @@ pub mod firmware {
     }
 
     pub fn settle(ctx: Context<Settle>) -> Result<()> {
-        require!(!ctx.accounts.receipt.settled, FirmwareError::AlreadySettled);
+        require!(!ctx.accounts.receipt.settled, ManessoError::AlreadySettled);
         require!(
             ctx.accounts.receipt.route_digest == ctx.accounts.installation.route_digest,
-            FirmwareError::RouteMismatch
+            ManessoError::RouteMismatch
         );
         let installation = &ctx.accounts.installation;
         let cost = ctx.accounts.receipt.cost;
@@ -176,10 +176,10 @@ pub mod firmware {
         let executor_amount = share(cost, installation.executor_bps)?;
         let protocol_amount = cost.checked_sub(publisher_amount)
             .and_then(|remaining| remaining.checked_sub(executor_amount))
-            .ok_or(FirmwareError::ArithmeticOverflow)?;
+            .ok_or(ManessoError::ArithmeticOverflow)?;
         require!(
             ctx.accounts.vault.amount >= cost,
-            FirmwareError::InsufficientFunds
+            ManessoError::InsufficientFunds
         );
 
         let bump = [ctx.accounts.machine.bump];
@@ -249,14 +249,14 @@ fn transfer_to<'info>(
 fn share(cost: u64, basis_points: u16) -> Result<u64> {
     let amount = u128::from(cost)
         .checked_mul(u128::from(basis_points))
-        .ok_or(FirmwareError::ArithmeticOverflow)?
+        .ok_or(ManessoError::ArithmeticOverflow)?
         / 10_000;
-    u64::try_from(amount).map_err(|_| error!(FirmwareError::ArithmeticOverflow))
+    u64::try_from(amount).map_err(|_| error!(ManessoError::ArithmeticOverflow))
 }
 
 fn route_digest(args: &InstallArgs) -> [u8; 32] {
     hashv(&[
-        b"firmware-route-v1",
+        b"manesso-route-v1",
         args.mint.as_ref(),
         args.publisher.as_ref(),
         args.executor.as_ref(),
@@ -538,7 +538,7 @@ impl Receipt {
 }
 
 #[error_code]
-pub enum FirmwareError {
+pub enum ManessoError {
     #[msg("Revision number must be sequential")]
     InvalidRevision,
     #[msg("Digest must not be zero")]

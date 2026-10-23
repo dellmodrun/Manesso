@@ -1,12 +1,12 @@
 [package]
-name = "firmware"
+name = "manesso"
 version = "0.1.0"
 edition = "2021"
 description = "Bounded agent capability registry, receipts and settlement on Solana"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "firmware"
+name = "manesso"
 
 [features]
 default = []

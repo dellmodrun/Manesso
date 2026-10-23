@@ -1,6 +1,6 @@
-# firmware
+# Manesso
 
-firmware is an Anchor program on Solana for bounded agent capabilities. A publisher registers a Chip and immutable revisions. A Machine owner installs one revision with an expiry, SPL token mint, per invocation cost ceiling, rolling budget and three recipient settlement route. An authorized operator records a receipt for completed offchain work. A receipt can be settled exactly once from a Machine controlled token vault.
+Manesso is an Anchor program on Solana for bounded agent capabilities. A publisher registers a Chip and immutable revisions. A Machine owner installs one revision with an expiry, SPL token mint, per invocation cost ceiling, rolling budget and three recipient settlement route. An authorized operator records a receipt for completed offchain work. A receipt can be settled exactly once from a Machine controlled token vault.
 
 The repository also contains the public website. Its board and code browser are generated from and mapped to the real Solana program source. The website is an architecture viewer, not a live execution monitor.
 
@@ -41,8 +41,8 @@ The owner must fund a token account whose authority is the Machine PDA before se
 
 ## Source files
 
-- `programs/firmware/src/lib.rs`: all program instructions, account constraints, state layouts, errors and unit tests.
-- `programs/firmware/Cargo.toml`: program dependencies.
+- `programs/manesso/src/lib.rs`: all program instructions, account constraints, state layouts, errors and unit tests.
+- `programs/manesso/Cargo.toml`: program dependencies.
 - `Cargo.toml`: Rust workspace.
 - `Anchor.toml`: program ID and local validator configuration.
 - `.github/workflows/solana.yml`: Linux compilation and unit tests.

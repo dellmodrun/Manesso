@@ -8,7 +8,7 @@ import vm from "node:vm";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const html = read("index.html");
-const program = read("programs/firmware/src/lib.rs");
+const program = read("programs/manesso/src/lib.rs");
 
 test("every board chip maps to a real program symbol", () => {
   const buttons = [...html.matchAll(/<button class="runtime-chip[^>]+>/g)].map((match) => match[0]);
@@ -16,7 +16,7 @@ test("every board chip maps to a real program symbol", () => {
   for (const button of buttons) {
     const source = button.match(/data-open="([^"]+)"/)?.[1];
     const symbol = button.match(/data-symbol="([^"]+)"/)?.[1];
-    assert.equal(source, "programs/firmware/src/lib.rs");
+    assert.equal(source, "programs/manesso/src/lib.rs");
     assert.ok(symbol && program.includes(symbol), symbol ?? button);
     assert.equal([...button.matchAll(/data-module=/g)].length, 1);
   }
@@ -25,8 +25,8 @@ test("every board chip maps to a real program symbol", () => {
 test("source browser embeds the checked-in program exactly", () => {
   const sandbox = { window: {} };
   vm.runInNewContext(read("source-data.js"), sandbox);
-  assert.equal(sandbox.window.FIRMWARE_SOURCE_OBJECTS["programs/firmware/src/lib.rs"].content, program.replace(/\r\n/g, "\n"));
-  for (const file of Object.keys(sandbox.window.FIRMWARE_SOURCE_OBJECTS)) {
+  assert.equal(sandbox.window.MANESSO_SOURCE_OBJECTS["programs/manesso/src/lib.rs"].content, program.replace(/\r\n/g, "\n"));
+  for (const file of Object.keys(sandbox.window.MANESSO_SOURCE_OBJECTS)) {
     assert.ok(fs.existsSync(path.join(root, file)), file);
     assert.ok(!file.startsWith("contracts/"), file);
   }

@@ -1,9 +1,9 @@
 {
-  "name": "firmware-solana-site",
+  "name": "manesso-solana-site",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Source mapped website for the firmware Solana program",
+  "description": "Source mapped website for the manesso Solana program",
   "scripts": {
     "source:sync": "node scripts/build-source-data.mjs",
     "test": "node --test tests/site.test.mjs",

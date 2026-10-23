@@ -416,7 +416,7 @@ button,a{font:inherit;color:inherit}button{border:0}a{text-decoration:none}
   }
 }
 .code-line.symbol-focus{background:rgba(158,245,138,.12);box-shadow:inset 3px 0 0 #9ff58a}.code-line.symbol-focus .num{color:#c7f5ba}
-/* Diework terminal interface */
+/* Manesso terminal interface */
 :root{
   --bg:#090806;
   --glass:#0d0b09;
@@ -457,8 +457,8 @@ body:before{
 .site-header:after{top:auto;right:0;bottom:-1px;left:0;width:auto;height:1px;background:linear-gradient(90deg,#e7835f 0 72px,#46352d 72px 100%)}
 .brand{gap:11px;color:#f1e9e2;font:800 11px var(--mono);letter-spacing:.17em}
 .brand:after{content:"// SOLANA EXECUTION SYSTEM";margin-left:9px;color:#625952;font:600 6px var(--mono);letter-spacing:.1em}
-.logo-crop{display:grid;width:32px;height:32px;place-items:center;overflow:visible;background:transparent}
-.logo-crop img{width:31px;height:31px;object-fit:contain;transform:none}
+.logo-crop{display:grid;width:32px;height:32px;place-items:center;overflow:hidden;background:transparent}
+.logo-crop img{width:31px;height:31px;object-fit:contain;transform:scale(1.8);mix-blend-mode:screen}
 .contract-slot{
   height:28px;padding:0 10px;border:1px solid #3d322d;border-radius:0;
   background:#090806;box-shadow:none;font-size:6px;
@@ -580,8 +580,8 @@ body:before{
 .shell{padding:72px 14px 0;gap:10px}
 .explorer{background:#0c0a08}
 .repo-head{border-color:#302823}
-.mark{width:44px;height:44px;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none}
-.mark img{width:42px;height:42px;object-fit:contain;transform:none}
+.mark{width:44px;height:44px;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none}
+.mark img{width:42px;height:42px;object-fit:contain;transform:scale(1.7);mix-blend-mode:screen}
 .repo-head small{color:#685f59}.repo-head h1{font-family:var(--mono);font-size:14px;letter-spacing:.02em}
 .repo-actions em{color:#756b64}
 .repo-actions button,.work-actions button{

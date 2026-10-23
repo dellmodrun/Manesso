@@ -668,7 +668,7 @@ body:before{
   min-width:0;
   flex:1;
   color:#eee3da;
-  font:600 8px/1 var(--mono);
+  font:600 9px/1 var(--mono);
   letter-spacing:.025em;
   text-align:center;
 }
@@ -679,9 +679,9 @@ body:before{
 @media(max-width:600px){
   .contract-slot{
     position:static!important;
-    width:230px;
+    width:auto;
     min-width:0;
-    max-width:230px;
+    max-width:174px;
     height:30px;
     margin-left:auto;
     transform:none!important;
@@ -691,7 +691,7 @@ body:before{
   .contract-slot span{padding-right:7px;font-size:7px}
   .contract-slot code{
     display:block;
-    max-width:none;
+    max-width:126px;
     overflow:hidden;
     color:#f1e5dc;
     font-size:7px;

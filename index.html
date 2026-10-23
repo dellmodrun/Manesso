@@ -8,7 +8,7 @@
   <title>Manesso / Executable Capability Infrastructure</title>
   <link rel="icon" type="image/png" href="./assets/manesso-logo.png?v=2">
   <link rel="apple-touch-icon" href="./assets/manesso-logo.png?v=2">
-  <link rel="stylesheet" href="./styles.css?v=20261002-3dchips-r2">
+  <link rel="stylesheet" href="./styles.css?v=20261024-backplane-r1">
 </head>
 <body>
 <header class="site-header">
@@ -56,119 +56,33 @@
     </div>
   </aside>
 
-  <div class="runtime-board" aria-label="Interactive Manesso execution architecture">
+  <div class="runtime-board backplane-board" aria-label="Interactive Manesso capability backplane">
     <div class="board-topline">
-      <span><i></i> MN-S01 / SOLANA ACCOUNT FLOW / SOURCE MAPPED</span>
-      <b>PDA ACCOUNTS / SPL TOKEN / ANCHOR</b>
+      <span><i></i> MN-S01 / CAPABILITY BACKPLANE / LIVE MODEL</span>
+      <b>POINTER TO INSPECT / SELECT FOR SOURCE</b>
     </div>
-    <div class="board-grid" aria-hidden="true"></div>
-    <div class="engineering-overlay" aria-hidden="true">
-      <div class="system-zone zone-input"><span>ZONE A / INPUT + IDENTITY</span></div>
-      <div class="system-zone zone-authority"><span>ZONE B / AUTHORITY PLANE</span></div>
-      <div class="system-zone zone-execution"><span>ZONE C / EXECUTION PLANE</span></div>
-      <div class="system-zone zone-proof"><span>ZONE D / PROOF + SETTLEMENT</span></div>
-      <span class="board-axis axis-x">X00&nbsp;&nbsp; X04&nbsp;&nbsp; X08&nbsp;&nbsp; X12&nbsp;&nbsp; X16</span>
-      <span class="board-axis axis-y">Y00&nbsp;&nbsp; Y04&nbsp;&nbsp; Y08&nbsp;&nbsp; Y12</span>
-      <span class="signal-label sig-manifest">MANIFEST_DIGEST[255:0]</span>
-      <span class="signal-label sig-authority">AUTH_GRANT / BUDGET</span>
-      <span class="signal-label sig-result">EXEC_RESULT[255:0]</span>
-      <span class="signal-label sig-receipt">RECEIPT_HASH</span>
-      <span class="signal-label sig-settlement">SETTLEMENT_ROUTE</span>
+    <div class="backplane-grid" aria-hidden="true"></div>
+    <div class="backplane-index" aria-hidden="true"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
+    <div class="hairline-wrap">
+      <div class="figure-meta"><span>ISOMETRIC SYSTEM MAP</span><b>CAPABILITY / EXECUTION / RECEIPT</b></div>
+      <div id="manessoBackplane" class="hairline-stage" aria-label="Six capability modules connected to the Manesso execution core"></div>
+      <div class="figure-readout">
+        <span>ACTIVE PLANE</span><strong id="backplaneRead">SYSTEM READY</strong><em id="backplaneCounter">00 / 06</em>
+      </div>
     </div>
-
-    <svg class="circuit-traces" viewBox="0 0 1000 660" preserveAspectRatio="none" aria-hidden="true">
-      <path class="copper bus-a" d="M125 170 H292 V302 H390"/>
-      <path class="copper bus-a-thin" d="M125 180 H282 V312 H390"/>
-      <path class="copper bus-b" d="M215 505 H300 V380 H390"/>
-      <path class="copper bus-b-thin" d="M215 515 H312 V392 H390"/>
-      <path class="copper bus-c" d="M610 304 H716 V170 H850"/>
-      <path class="copper bus-c-thin" d="M610 315 H728 V180 H850"/>
-      <path class="copper bus-d" d="M610 380 H716 V505 H850"/>
-      <path class="copper bus-d-thin" d="M610 392 H728 V515 H850"/>
-      <path class="copper bus-e" d="M482 447 V548"/>
-      <path class="copper bus-e-thin" d="M518 447 V548"/>
-    </svg>
-
-    <button class="runtime-chip hardware-ic chip-manifest" data-module="manifest" data-symbol="pub struct InstallArgs" data-runtime-step="0" data-open="programs/manesso/src/lib.rs">
-      <i class="pin-one"></i><span class="ic-notch"></span>
-      <small>U01 / POLICY INPUT</small><b>INSTALL ARGS</b><em>OWNER DEFINED</em>
-      <span class="ic-led"></span><span class="chip-index">01</span>
-    </button>
-    <button class="runtime-chip hardware-ic chip-registry" data-module="registry" data-symbol="pub fn create_chip" data-runtime-step="1" data-open="programs/manesso/src/lib.rs">
-      <i class="pin-one"></i><span class="ic-notch"></span>
-      <small>U03 / IDENTITY</small><b>CHIP REGISTRY</b><em>PDA / REVISION</em>
-      <span class="ic-led"></span><span class="chip-index">03</span>
-    </button>
-    <button class="runtime-chip hardware-ic chip-kernel" data-module="policy" data-symbol="pub fn install_chip" data-runtime-step="2" data-open="programs/manesso/src/lib.rs">
-      <i class="pin-one"></i><span class="ic-notch"></span>
-      <small>U02 / AUTHORITY</small><b>INSTALL POLICY</b><em>COST / EXPIRY</em>
-      <span class="ic-led"></span><span class="chip-index">02</span>
-    </button>
-    <button class="runtime-chip processor-package chip-core" data-module="core" data-symbol="pub fn record_receipt" data-runtime-step="3" data-open="programs/manesso/src/lib.rs">
-      <span class="package-corner c1"></span><span class="package-corner c2"></span>
-      <span class="package-corner c3"></span><span class="package-corner c4"></span>
-      <span class="core-substrate"><span class="core-die"><i></i></span></span>
-      <small>U00 / MANESSO PROGRAM CORE</small>
-      <strong>MN-S01</strong><em id="coreState">RECEIPT RECORD</em>
-      <span class="core-meter"><i></i></span>
-    </button>
-    <button class="runtime-chip hardware-ic chip-receipt" data-module="receipt" data-symbol="pub struct Receipt" data-runtime-step="4" data-open="programs/manesso/src/lib.rs">
-      <i class="pin-one"></i><span class="ic-notch"></span>
-      <small>U04 / ACCOUNT</small><b>RECEIPT</b><em>UNIQUE PDA</em>
-      <span class="ic-led"></span><span class="chip-index">04</span>
-    </button>
-    <button class="runtime-chip hardware-ic chip-settlement" data-module="settlement" data-symbol="pub fn settle" data-runtime-step="5" data-open="programs/manesso/src/lib.rs">
-      <i class="pin-one"></i><span class="ic-notch"></span>
-      <small>U05 / SPL TOKEN</small><b>SETTLEMENT</b><em>ONE TIME</em>
-      <span class="ic-led"></span><span class="chip-index">05</span>
-    </button>
-
-    <div class="subsystem-label label-compute">COMPUTE</div>
-    <div class="subsystem-label label-security">SECURITY</div>
-    <div class="subsystem-label label-proof">PROOF</div>
-    <div class="subsystem-label label-economics">ECONOMICS</div>
-
-    <button class="runtime-chip aux-ic aux-scheduler" data-module="scheduler" data-symbol="pub fn record_receipt" data-open="programs/manesso/src/lib.rs">
-      <small>U10</small><b>RECEIPT GATE</b><em>EXPIRY CHECK</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-loader" data-module="artifact-loader" data-symbol="pub fn publish_revision" data-open="programs/manesso/src/lib.rs">
-      <small>U11</small><b>REVISION RECORD</b><em>DIGEST PIN</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-verifier" data-module="verifier" data-symbol="pub fn install_chip" data-open="programs/manesso/src/lib.rs">
-      <small>U12</small><b>INSTALL CHECK</b><em>REVISION CHECK</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-nonce" data-module="nonce-guard" data-symbol="pub struct RecordReceipt" data-open="programs/manesso/src/lib.rs">
-      <small>U20</small><b>INVOCATION PDA</b><em>REPLAY DENY</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-selector" data-module="account-boundary" data-symbol="pub struct Settle" data-open="programs/manesso/src/lib.rs">
-      <small>U21</small><b>ACCOUNT BOUNDARY</b><em>OWNER / MINT</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-budget" data-module="budget-meter" data-symbol="window_spent = next_spent" data-open="programs/manesso/src/lib.rs">
-      <small>U22</small><b>BUDGET METER</b><em>ROLLING LIMIT</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-version" data-module="version-pin" data-symbol="pub fn publish_revision" data-open="programs/manesso/src/lib.rs">
-      <small>U30</small><b>VERSION PIN</b><em>REVISION LOCK</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-digest" data-module="digest-engine" data-symbol="fn route_digest" data-open="programs/manesso/src/lib.rs">
-      <small>U40</small><b>DIGEST ENGINE</b><em>SHA256</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-signer" data-module="receipt-reporter" data-symbol="pub struct RecordReceipt" data-open="programs/manesso/src/lib.rs">
-      <small>U41</small><b>RECEIPT REPORTER</b><em>OPERATOR AUTH</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-meter" data-module="price-meter" data-symbol="ManessoError::CostExceedsLimit" data-open="programs/manesso/src/lib.rs">
-      <small>U50</small><b>COST CHECK</b><em>MAX COST</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-router" data-module="revenue-router" data-symbol="fn transfer_to" data-open="programs/manesso/src/lib.rs">
-      <small>U51</small><b>REVENUE ROUTER</b><em>SPLIT ROUTE</em><span class="ic-led"></span>
-    </button>
-    <button class="runtime-chip aux-ic aux-watchdog" data-module="watchdog" data-symbol="pub enum ManessoError" data-open="programs/manesso/src/lib.rs">
-      <small>U60</small><b>ERROR GUARD</b><em>FAIL CLOSED</em><span class="ic-led"></span>
-    </button>
+    <nav class="backplane-nodes" aria-label="Source mapped execution stages">
+      <button class="source-node" data-stage-index="0" data-open="programs/manesso/src/lib.rs" data-symbol="pub struct InstallArgs"><small>01 / INPUT</small><b>MANIFEST</b><em>OWNER POLICY</em></button>
+      <button class="source-node" data-stage-index="1" data-open="programs/manesso/src/lib.rs" data-symbol="pub fn create_chip"><small>02 / IDENTITY</small><b>REGISTRY</b><em>CHIP PDA</em></button>
+      <button class="source-node" data-stage-index="2" data-open="programs/manesso/src/lib.rs" data-symbol="pub fn install_chip"><small>03 / CONTROL</small><b>POLICY</b><em>BOUNDS CHECK</em></button>
+      <button class="source-node" data-stage-index="3" data-open="programs/manesso/src/lib.rs" data-symbol="pub struct Receipt"><small>04 / PROOF</small><b>RECEIPT</b><em>UNIQUE PDA</em></button>
+      <button class="source-node" data-stage-index="4" data-open="programs/manesso/src/lib.rs" data-symbol="pub fn settle"><small>05 / VALUE</small><b>SETTLEMENT</b><em>SPL TOKEN</em></button>
+      <button class="source-node" data-stage-index="5" data-open="programs/manesso/src/lib.rs" data-symbol="pub enum ManessoError"><small>06 / SAFETY</small><b>GUARD</b><em>FAIL CLOSED</em></button>
+    </nav>
+    <div class="backplane-spec" aria-hidden="true">
+      <span><b>PROGRAM</b> ANCHOR / SOLANA</span><span><b>AUTHORITY</b> OWNER / OPERATOR</span><span><b>STATE</b> PDA / DIGEST</span><span><b>SETTLEMENT</b> ATOMIC</span>
+    </div>
     <div class="board-telemetry">
-      <span>CLK <b>PDA</b></span>
-      <span>PIPELINE <b id="runtimeStage">VERIFYING INPUT</b></span>
-      <span>BUDGET <b id="runtimeLoad">BOUNDED</b></span>
-      <span>SETTLE <b>SPL TOKEN</b></span>
+      <span>CORE <b>MN-S01</b></span><span>STATUS <b>VERIFIED PATH</b></span><span>BOUNDARY <b>LOCAL EXECUTION</b></span><span>OUTPUT <b>ONCHAIN RECEIPT</b></span>
     </div>
   </div>
 </section>
@@ -289,6 +203,8 @@
 </main>
 <div class="toast" id="toast">OBJECT COPIED TO CLIPBOARD</div>
 <script src="./source-data.js"></script>
+<script src="./assets/hairline-kernel.js"></script>
 <script src="./app.js"></script>
+<script src="./assets/manesso-backplane.js"></script>
 </body>
 </html>

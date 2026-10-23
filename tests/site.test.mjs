@@ -10,16 +10,18 @@ const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const html = read("index.html");
 const program = read("programs/manesso/src/lib.rs");
 
-test("every board chip maps to a real program symbol", () => {
-  const buttons = [...html.matchAll(/<button class="runtime-chip[^>]+>/g)].map((match) => match[0]);
-  assert.equal(buttons.length, 18);
+test("every modeled execution stage maps to a real program symbol", () => {
+  const buttons = [...html.matchAll(/<button class="source-node[^>]+>/g)].map((match) => match[0]);
+  assert.equal(buttons.length, 6);
   for (const button of buttons) {
     const source = button.match(/data-open="([^"]+)"/)?.[1];
     const symbol = button.match(/data-symbol="([^"]+)"/)?.[1];
     assert.equal(source, "programs/manesso/src/lib.rs");
     assert.ok(symbol && program.includes(symbol), symbol ?? button);
-    assert.equal([...button.matchAll(/data-module=/g)].length, 1);
+    assert.equal([...button.matchAll(/data-stage-index=/g)].length, 1);
   }
+  assert.match(html, /id="manessoBackplane"/);
+  assert.match(html, /assets\/hairline-kernel\.js/);
 });
 
 test("source browser embeds the checked-in program exactly", () => {

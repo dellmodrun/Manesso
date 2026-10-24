@@ -6,7 +6,7 @@ The repository also contains the public website. Its board and code browser are 
 
 ## Current status
 
-The Rust program compiles and its unit tests pass in GitHub Actions. There is no public program deployment or token address. The website therefore says NOT DEPLOYED. The program is not audited. Do not fund a vault or rely on this code to protect production assets without independent review and end to end testing.
+The Rust program compiles and its unit tests pass in GitHub Actions. The website publishes the official Manesso token CA, but there is no public protocol program deployment. The token CA is separate from the program ID and is not evidence that this protocol program is deployed. The program is not audited. Do not fund a vault or rely on this code to protect production assets without independent review and end to end testing.
 
 The current program records operator reported offchain results. It does not execute private code, restrict a local process, verify computation or prove that a reported output is correct. An authorized operator is a trust assumption. Artifact and manifest digests are pinned onchain, but the party installing a Chip must inspect and independently hash the offchain bytes.
 
@@ -83,4 +83,4 @@ npm test
 
 The website reads source contents from `source-data.js`, generated from files listed in `scripts/build-source-data.mjs`. Clicking a board component opens the Rust source and scrolls to the relevant instruction or account. The board sequence is an architecture trace, not live telemetry.
 
-The CA field remains NOT DEPLOYED until a real token address is supplied. The program ID above is not a token CA.
+The CA field publishes the official Manesso token address. The program ID above is separate and is not a token CA.
